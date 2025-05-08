@@ -60,6 +60,20 @@ miotyAtClient_returnCode miotyAtClient_factoryReset(void) {
     return MIOTYATCLIENT_RETURN_CODE_OK;
 }
 
+miotyAtClient_returnCode miotyAtClient_startBootloader(void) {
+    char cmd[8] = "AT-SBTL\r";
+    miotyAtClientWrite((uint8_t *)cmd, sizeof(cmd));
+    /* this command has no answer */
+    return MIOTYATCLIENT_RETURN_CODE_OK;
+}
+
+miotyAtClient_returnCode miotyAtClient_shutdown(void) {
+    char cmd[8] = "AT-SHDN\r";
+    miotyAtClientWrite((uint8_t *)cmd, sizeof(cmd));
+    /* this command has no answer */
+    return MIOTYATCLIENT_RETURN_CODE_OK;
+}
+
 miotyAtClient_returnCode miotyAtClient_setNetworkKey(uint8_t * nwKey) {
     return set_info_bytes("AT-MNWK", 7, nwKey, 16);
 }
@@ -227,6 +241,76 @@ miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool * dl_fla
 
 miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t * buffer, uint8_t * sizeBuf) {
     return get_info_string("ATI", 3, buffer, sizeBuf);
+}
+
+miotyAtClient_returnCode miotyAtClient_getCoreLibInfo(uint8_t * buffer, uint8_t * sizeBuf) {
+    return get_info_string("AT-LIBV", 7, buffer, sizeBuf);
+}
+
+miotyAtClient_returnCode miotyArClient_txInhibit(bool * enable, bool set) {
+    uint32_t val;
+    if (set) {
+        val = *enable;
+        return set_info_int("AT-TXINH", 8, &val);
+    }
+    miotyAtClient_returnCode ret = get_info_int("AT-TXINH", 8, &val);
+    if (ret == MIOTYATCLIENT_RETURN_CODE_OK)
+    {
+        *enable = val;
+    }
+    return ret;
+}
+
+miotyAtClient_returnCode miotyArClient_txActive(bool * enable, bool set) {
+    uint32_t val;
+    if (set) {
+        val = *enable;
+        return set_info_int("AT-TXACT", 8, &val);
+    }
+    miotyAtClient_returnCode ret = get_info_int("AT-TXACT", 8, &val);
+    if (ret == MIOTYATCLIENT_RETURN_CODE_OK)
+    {
+        *enable = val;
+    }
+    return ret;
+}
+
+miotyAtClient_returnCode miotyArClient_rxActive(bool * enable, bool set) {
+    uint32_t val;
+    if (set) {
+        val = *enable;
+        return set_info_int("AT-RXACT", 8, &val);
+    }
+    miotyAtClient_returnCode ret = get_info_int("AT-RXACT", 8, &val);
+    if (ret == MIOTYATCLIENT_RETURN_CODE_OK)
+    {
+        *enable = val;
+    }
+    return ret;
+}
+
+miotyAtClient_returnCode miotyAtClient_startTxContUnmodulated(uint32_t frequency) {
+    return set_info_int("AT$TXCU", 7, &frequency);
+}
+
+miotyAtClient_returnCode miotyAtClient_startTxContModulated(uint32_t frequency) {
+    return set_info_int("AT$TXCMLP", 9, &frequency);
+}
+
+miotyAtClient_returnCode miotyAtClient_stopTxCont(void) {
+    miotyAtClientWrite((uint8_t *)"AT$TXOFF\r", 9);
+    char response_buf[10];
+    return check_AtResponse( response_buf);
+}
+
+miotyAtClient_returnCode miotyAtClient_startRxCont(uint32_t frequency) {
+    return set_info_int("AT$RXCONT", 9, &frequency);
+}
+
+miotyAtClient_returnCode miotyAtClient_stopRxCont(void) {
+    miotyAtClientWrite((uint8_t *)"AT$RXOFF\r", 9);
+    char response_buf[10];
+    return check_AtResponse( response_buf);
 }
 
 
@@ -446,8 +530,6 @@ static miotyAtClient_returnCode get_string_AtResponse(char * AT_cmd, uint8_t siz
         uint8_t len = 30;
         if(miotyAtClientRead(buf, &len)) {
             for (uint8_t i=0; i<len; i++) {
-                if(isalpha(buf[i]))
-                    buf[i] = toupper(buf[i]);
                 response_buf[i+pos] = buf[i];
             }
             pos += len;

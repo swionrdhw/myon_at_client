@@ -78,12 +78,27 @@ bool miotyAtClientRead(uint8_t *, uint8_t *);
  * @return 
  */
 miotyAtClient_returnCode miotyAtClient_reset(void); //AT-RST
+
 /**
  * @brief Reset the MIOTY™ modem to its factory defaults
  *
  * @return 
  */
 miotyAtClient_returnCode miotyAtClient_factoryReset(void); //ATZ
+
+/**
+ * @brief Restart device in bootloader (AT-SBTL)
+ *
+ * @return 
+ */
+miotyAtClient_returnCode miotyAtClient_startBootloader(void);
+
+/**
+ * @brief Shut down the modem. Wakeup only on TX_INH or RESET pin action. (AT-SHDN)
+ *
+ * @return 
+ */
+miotyAtClient_returnCode miotyAtClient_shutdown(void);
 
 /**
  * @brief Send AT command to set the network key (AT-MNWK)
@@ -308,6 +323,87 @@ miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool * dl_fla
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
 miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t * buffer, uint8_t * sizeBuf);
+
+/*!
+ * \brief Get end-point core lib information (AT-LIBV)
+ *
+ * \param[out]      buffer          Pointer to a buffer, where data returned by AT_cmd will be stored
+ * \param[out]      size_data       Size of the Buffer, will be set to size of data returned by AT_cmd
+ *
+ * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_getCoreLibInfo(uint8_t * buffer, uint8_t * sizeBuf);
+
+/**
+ * @brief Get/Set TX inhibit function state (AT-TXINH)
+ *
+ * @param[in,out] enable    state value to set or get from the MIOTY modem
+ * @param[in]     set       If true the state will be set to enable, else it will be read from the modem and written to enable
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyArClient_txInhibit(bool * enable, bool set);
+
+/**
+ * @brief Get/Set TX active function state (AT-TXACT)
+ *
+ * @param[in,out] enable    state value to set or get from the MIOTY modem
+ * @param[in]     set       If true the state will be set to enable, else it will be read from the modem and written to enable
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyArClient_txActive(bool * enable, bool set);
+
+/**
+ * @brief Get/Set RX active function state (AT-RXACT)
+ *
+ * @param[in,out] enable    state value to set or get from the MIOTY modem
+ * @param[in]     set       If true the state will be set to enable, else it will be read from the modem and written to enable
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyArClient_rxActive(bool * enable, bool set);
+
+/**
+ * @brief Start sending an unmodulated carrier at the given frequency (AT$TXCU)
+ *
+ * @param[in]   frequency  Frequency in Hz to send the carrier at.
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_startTxContUnmodulated(uint32_t frequency);
+
+/**
+ * @brief Start sending a modulated carrier at the given frequency (AT$TXCLMP)
+ *
+ * @param[in]   frequency  Frequency in Hz to send the carrier at.
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_startTxContModulated(uint32_t frequency);
+
+/**
+ * @brief Stop sending a carrier (AT$TXOFF)
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_stopTxCont(void);
+
+/**
+ * @brief Start RX continuous mode at the given frequency (AT$TXCLMP)
+ *
+ * @param[in]   frequency  Frequency in Hz to start receiver at.
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_startRxCont(uint32_t frequency);
+
+/**
+ * @brief Stop RX continuous mode (AT$RXOFF)
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_stopRxCont(void);
 
 #ifdef __cplusplus
 }
