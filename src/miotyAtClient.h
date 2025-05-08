@@ -67,6 +67,7 @@ typedef enum miotyAtClient_returnCode {
     MIOTYATCLIENT_RETURN_CODE_ATReadFailed,
 } miotyAtClient_returnCode;
 
+
 void miotyAtClientWrite(uint8_t *, uint16_t);
 bool miotyAtClientRead(uint8_t *, uint8_t *);
 
@@ -83,24 +84,6 @@ miotyAtClient_returnCode miotyAtClient_reset(void); //AT-RST
  * @return 
  */
 miotyAtClient_returnCode miotyAtClient_factoryReset(void); //ATZ
-
-/**
- * @brief Set Factory Defaults of the MITOY™ modem (only usable if factory defaults are not set) (AT-DEF)
- *
- * @param eui64             8-byte long EUI
- * @param ipv6              8-byte IPv6 Subnet Mask
- * @param nwKey             16-byte Network Key
- * @param shortAdress       2-byte Short Adress
- * @param appCryptoKey      16-byte Application Crypto Key
- * @param ulProfile         uplink Profile (0-3/EU0-US0)
- * @param ulMode            uplink Mode (0-2)
- * @param ulSyncBurst       uplink Syncronization Burst enable (0/1)
- * @param appCryptoMode     Application Crypto Mode (0/1)
- * @param attached1stBoot   Node attached on first Boot (0/1)
- *
- * @return 
- */
-miotyAtClient_returnCode miotyAtClient_setDefaults(uint8_t * eui64, uint8_t * ipv6, uint8_t * nwKey, uint8_t * shortAdress, uint8_t * appCryptoKey, uint8_t ulProfile, uint8_t ulMode, uint8_t ulSyncBurst, uint8_t appCryptoMode, uint8_t attached1stBoot);
 
 /**
  * @brief Send AT command to set the network key (AT-MNWK)
@@ -145,26 +128,6 @@ miotyAtClient_returnCode miotyAtClient_getOrSetEui(uint8_t * eui64, bool set);
 miotyAtClient_returnCode miotyAtClient_getOrSetShortAdress(uint8_t * shortAdress, bool set);
 
 /**
- * @brief Get/Set Uplink transmit power (AT-UTPL)
- *
- * @param[in,out]   txPower         Pointer to the transmit Power level needs to be in {10,...100}
- * @param[in]       set             If true transmit power will be set to *txPower otherwise it will be written to *txPower
- *
- * @return 
- */
-miotyAtClient_returnCode miotyAtClient_getOrSetTransmitPower(uint32_t * txPower, bool set);
-
-/**
- * @brief Get/Set modem Baudrate (AT+IPR)
- *
- * @param[in,out]   baud            Pointer to baudrate
- * @param[in]       set             If true baudrate will be set to *baud otherwise it will be written to *baud
- *
- * @return 
- */
-miotyAtClient_returnCode miotyAtClient_getOrSetBaudrate(uint32_t * baud, bool set);
-
-/**
  * @brief Send AT command to get the current packet counter (AT-MPCT)
  *
  * @param[out]   counter         Pointer to store the packet counter
@@ -173,6 +136,16 @@ miotyAtClient_returnCode miotyAtClient_getOrSetBaudrate(uint32_t * baud, bool se
 
  */
 miotyAtClient_returnCode miotyAtClient_getPacketCounter(uint32_t * counter);
+
+/**
+ * @brief Get/Set Uplink transmit power (AT-UTPL)
+ *
+ * @param[in,out]   txPower         Pointer to the transmit Power level needs to be in {10,...100}
+ * @param[in]       set             If true transmit power will be set to *txPower otherwise it will be written to *txPower
+ *
+ * @return 
+ */
+miotyAtClient_returnCode miotyAtClient_getOrSetTransmitPower(uint32_t * txPower, bool set);
 
 /**
  * @brief Get/Set uplink Mode (AT-UM)
@@ -185,16 +158,6 @@ miotyAtClient_returnCode miotyAtClient_getPacketCounter(uint32_t * counter);
 miotyAtClient_returnCode miotyAtClient_uplinkMode(uint32_t * ulMode, bool set);
 
 /**
- * @brief Get/Set uplink SyncBurst (AT-US)
- *
- * @param[in,out] ulSyncBurst   uplink SyncBurst to set or get from the MIOTY modem
- * @param[in]     set           If true the uplink SyncBurst of the MIOTY modem will be set to ulSyncBurst, else it will be read from the modem and written to ulSyncBurst
- *
- * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
- */
-miotyAtClient_returnCode miotyAtClient_uplinkSyncBurst(uint32_t * ulSyncBurst, bool set);
-
-/**
  * @brief Get/Set uplink Profile (AT-UP)
  *
  * @param[in,out] ulProfile    uplink Profile to set or get from the MIOTY modem
@@ -203,36 +166,6 @@ miotyAtClient_returnCode miotyAtClient_uplinkSyncBurst(uint32_t * ulSyncBurst, b
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
 miotyAtClient_returnCode miotyAtClient_uplinkProfile(uint32_t * ulProfile, bool set);
-
-/**
- * @brief Get/Set application Crypto Mode (AT-ACM)
- *
- * @param[in,out] appCyrptoMode    application Crypto Mode to set or get from the MIOTY modem
- * @param[in]     set              If true the application Crypto Mode of the MIOTY modem will be set to appCyrptoMode, else it will be read from the modem and written to appCyrptoMode
- *
- * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
- */
-miotyAtClient_returnCode miotyAtClient_appCryptoMode(uint32_t * appCyrptoMode, bool set);
-
-/**
- * @brief Set the application crypto key (AT-ACK)
- *
- * @param[in,out] appCryptoKey  Pointer to a buffer containing the 16 byte long application crypto key
- *
- * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
- */
-miotyAtClient_returnCode miotyAtClient_setAppCryptoKey(uint8_t * appCryptoKey);
-
-/*!
- * \brief Send uni-directional message (AT-UMPF)
- *
- * \param[in]       msg             Pointer to message to be send (including MPF field)
- * \param[in]       sizemsg         Size of msg
- * \param[out]      packetCounter   packet Counter after successful transmission
- *
- * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
- */
-miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
 
 /*!
  * \brief Send uni-directional message (AT-U)
@@ -246,17 +179,15 @@ miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(uint8_t * msg, uint8_t 
 miotyAtClient_returnCode miotyAtClient_sendMessageUni(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
 
 /*!
- * \brief Send bi-directional message (AT-BMPF)
+ * \brief Send uni-directional message (AT-UMPF)
  *
  * \param[in]       msg             Pointer to message to be send (including MPF field)
  * \param[in]       sizemsg         Size of msg
- * \param[out]      data            Pointer to a buffer, where data returned by AT_cmd will be stored
- * \param[out]      size_data       Size of the Buffer, will be set to size of data returned by AT_cmd
  * \param[out]      packetCounter   packet Counter after successful transmission
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
 
 /*!
  * \brief Send bi-directional message (AT-B)
@@ -265,11 +196,26 @@ miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(uint8_t * msg, uint8_t
  * \param[in]       sizemsg         Size of msg
  * \param[out]      data            Pointer to a buffer, where data returned by AT_cmd will be stored
  * \param[out]      size_data       Size of the Buffer, will be set to size of data returned by AT_cmd
+ * \param[out]      dl_mpf          Received downlink MPF field
  * \param[out]      packetCounter   packet Counter after successful transmission
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageBidi(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageBidi(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint8_t * dl_mpf, uint32_t * packetCounter);
+
+/*!
+ * \brief Send bi-directional message (AT-BMPF)
+ *
+ * \param[in]       msg             Pointer to message to be send (including MPF field)
+ * \param[in]       sizemsg         Size of msg
+ * \param[out]      data            Pointer to a buffer, where data returned by AT_cmd will be stored
+ * \param[out]      size_data       Size of the Buffer, will be set to size of data returned by AT_cmd
+ * \param[out]      dl_mpf          Received downlink MPF field
+ * \param[out]      packetCounter   packet Counter after successful transmission
+ *
+ * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint8_t * dl_mpf, uint32_t * packetCounter);
 
 /*!
  * \brief Send uni-directional message without MAC (AT-TU)
@@ -333,6 +279,35 @@ miotyAtClient_returnCode miotyAtClient_macAttachLocal(uint8_t * MSTA);
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
 miotyAtClient_returnCode miotyAtClient_macDetachLocal(uint8_t * MSTA);
+
+/**
+ * @brief Get the attachment state
+ *
+ * @param[out]      attached_p            set to true if module is attached
+ *
+ * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_getAttachment(bool * attached_p);
+
+/**
+ * @brief Get/Set downling request response flag for next uplink (AT-MRDR)
+ *
+ * @param[in,out] dl_flag   flag value to set or get from the MIOTY modem
+ * @param[in]     set       If true the flag will be set to dl_flag, else it will be read from the modem and written to dl_flag
+ *
+ * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool * dl_flag, bool set);
+
+/*!
+ * \brief Get end-point information (ATI)
+ *
+ * \param[out]      buffer          Pointer to a buffer, where data returned by AT_cmd will be stored
+ * \param[out]      size_data       Size of the Buffer, will be set to size of data returned by AT_cmd
+ *
+ * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
+ */
+miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t * buffer, uint8_t * sizeBuf);
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,9 @@
 
 ## Information
 
-Client to communicate with a MIOTY™ modem that uses MIOTY™ ENDPOINT AT-Protol v2.2.x. 
+Client to communicate with the Swissphone m.YON mioty module.
+
+This library is forked from [https://github.com/mioty-iot/mioty_at_client_c].
 
 ## Integration
 
