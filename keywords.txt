@@ -1,0 +1,77 @@
+##############################################
+# miotyAtClient – syntax‑highlighting keywords
+# Format: <token>\t<KEYWORD# | LITERAL#>
+#  KEYWORD1  → types & classes
+#  KEYWORD2  → functions / methods
+#  LITERAL1  → constants / enum values
+##############################################
+
+# ---------- data types ----------
+miotyAtClient_returnCode	KEYWORD1
+
+# ---------- public API ----------
+miotyAtClientWrite	KEYWORD2
+miotyAtClientRead	KEYWORD2
+miotyAtClient_reset	KEYWORD2
+miotyAtClient_factoryReset	KEYWORD2
+miotyAtClient_startBootloader	KEYWORD2
+miotyAtClient_shutdown	KEYWORD2
+miotyAtClient_setNetworkKey	KEYWORD2
+miotyAtClient_getOrSetIPv6SubnetMask	KEYWORD2
+miotyAtClient_getOrSetEui	KEYWORD2
+miotyAtClient_getOrSetShortAdress	KEYWORD2
+miotyAtClient_getPacketCounter	KEYWORD2
+miotyAtClient_getOrSetTransmitPower	KEYWORD2
+miotyAtClient_uplinkMode	KEYWORD2
+miotyAtClient_uplinkProfile	KEYWORD2
+miotyAtClient_sendMessageUni	KEYWORD2
+miotyAtClient_sendMessageUniMPF	KEYWORD2
+miotyAtClient_sendMessageBidi	KEYWORD2
+miotyAtClient_sendMessageBidiMPF	KEYWORD2
+miotyAtClient_sendMessageUniTransparent	KEYWORD2
+miotyAtClient_sendMessageBidiTransparent	KEYWORD2
+miotyAtClient_macAttach	KEYWORD2
+miotyAtClient_macDetach	KEYWORD2
+miotyAtClient_macAttachLocal	KEYWORD2
+miotyAtClient_macDetachLocal	KEYWORD2
+miotyAtClient_getAttachment	KEYWORD2
+miotyAtClient_downlinkRequestResponseFlag	KEYWORD2
+miotyAtClient_getEpInfo	KEYWORD2
+miotyAtClient_getCoreLibInfo	KEYWORD2
+miotyArClient_txInhibit	KEYWORD2
+miotyArClient_txActive	KEYWORD2
+miotyArClient_rxActive	KEYWORD2
+miotyAtClient_startTxContUnmodulated	KEYWORD2
+miotyAtClient_startTxContModulated	KEYWORD2
+miotyAtClient_stopTxCont	KEYWORD2
+miotyAtClient_startRxCont	KEYWORD2
+miotyAtClient_stopRxCont	KEYWORD2
+
+# ---------- enum values ----------
+MIOTYATCLIENT_RETURN_CODE_OK	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacError	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacFramingError	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ArgumentSizeMismatch	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ArgumentOOR	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_BufferSizeInsufficient	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacNodeNotAttached	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacNetworkKeyNotSet	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacAlreadyAttached	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ERR	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacDownlinkNotAvailable	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_UplinkPackingErr	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacNoDownlinkReceived	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacOptionNotAllowed	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacDownlinkErr	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_MacDefaultsNotSet	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_PreviousCommandNotFinished	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_DownlinkDataCorrupted	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_FeatureNotSupported	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATErr	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATgenericErr	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATCommandNotKnown	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATParamOOB	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATDataSizeMismatch	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATUnexpectedChar	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATArgInvalid	LITERAL1
+MIOTYATCLIENT_RETURN_CODE_ATReadFailed	LITERAL1
