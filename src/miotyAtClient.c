@@ -164,10 +164,7 @@ miotyAtClient_returnCode miotyAtClient_sendMessageBidiTransparent(uint8_t * msg,
     write_cmd_bytes("AT-TB", 5, msg, sizeMsg);
     char response_buf[200];
     miotyAtClient_returnCode ret = get_data_AtResponse( "AT-TB", 5, data, size_data, response_buf);
-    if (ret != MIOTYATCLIENT_RETURN_CODE_OK)
-        return ret;
     get_packet_counter(response_buf, packetCounter);
-
     return ret;
 }
 
@@ -366,9 +363,6 @@ static miotyAtClient_returnCode checkATresponseMsg(uint32_t * packetCounter) {
     char response_buf[200];
     miotyAtClient_returnCode ret = check_AtResponse( response_buf);
     get_packet_counter(response_buf, packetCounter);
-    if (ret != MIOTYATCLIENT_RETURN_CODE_OK)
-        return ret;
-
     return ret;
 }
 
@@ -409,9 +403,9 @@ static void write_cmd_bytes(char * AT_cmd, uint8_t sizeCmd, uint8_t * data, uint
     strcpy(cmd, AT_cmd);
     cmd[sizeCmd] = '=';
     strcpy(cmd+sizeCmd+1, lenString);
-    cmd[sizeCmd+1+digits] = 0x09;
+    cmd[sizeCmd+1+digits] = '\t';
     strcpy(cmd+sizeCmd+digits+2, dataString);
-    cmd[sizeCmd+dataStringSize+digits+2] = 0x1A;
+    cmd[sizeCmd+dataStringSize+digits+2] = '\x1A';
     cmd[sizeCmd+dataStringSize+digits+3] = '\r';
     
     miotyAtClientWrite((uint8_t *) cmd, sizeof(cmd));
@@ -456,7 +450,7 @@ static miotyAtClient_returnCode get_int_data_AtResponse(char * AT_cmd, uint8_t s
                     break;
                 }
                 err_pos += 7;
-                return_code = atoi(err_pos) + 16;
+                return_code = atoi(err_pos) + MIOTYATCLIENT_RETURN_CODE_ATErr;
                 break;
             }
         } else {
@@ -512,7 +506,7 @@ static miotyAtClient_returnCode get_data_AtResponse(char * AT_cmd, uint8_t sizeC
                     break;
                 }
                 err_pos += 7;
-                return_code = atoi(err_pos) + 16;
+                return_code = atoi(err_pos) + MIOTYATCLIENT_RETURN_CODE_ATErr;
                 break;
             }
         } else {
@@ -564,7 +558,7 @@ static miotyAtClient_returnCode get_string_AtResponse(char * AT_cmd, uint8_t siz
                     break;
                 }
                 err_pos += 7;
-                return_code = atoi(err_pos) + 16;
+                return_code = atoi(err_pos) + MIOTYATCLIENT_RETURN_CODE_ATErr;
                 break;
             }
         } else {
@@ -609,7 +603,7 @@ static miotyAtClient_returnCode check_AtResponse(char * response_buf) {
                     break;
                 }
                 err_pos += 7;
-                return_code = atoi(err_pos) + 16;
+                return_code = atoi(err_pos) + MIOTYATCLIENT_RETURN_CODE_ATErr;
                 break;
             }
         } else {

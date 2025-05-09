@@ -41,30 +41,33 @@ extern "C" {
 #endif
 
 typedef enum miotyAtClient_returnCode {
-    MIOTYATCLIENT_RETURN_CODE_OK,
-    MIOTYATCLIENT_RETURN_CODE_MacError,
-    MIOTYATCLIENT_RETURN_CODE_MacFramingError, // 2
-    MIOTYATCLIENT_RETURN_CODE_ArgumentSizeMismatch,
-    MIOTYATCLIENT_RETURN_CODE_ArgumentOOR, // 4
-    MIOTYATCLIENT_RETURN_CODE_BufferSizeInsufficient,
-    MIOTYATCLIENT_RETURN_CODE_MacNodeNotAttached, // 6
-    MIOTYATCLIENT_RETURN_CODE_MacNetworkKeyNotSet,
-    MIOTYATCLIENT_RETURN_CODE_MacAlreadyAttached,//8
-    MIOTYATCLIENT_RETURN_CODE_ERR, //not in protocol
-    MIOTYATCLIENT_RETURN_CODE_MacDownlinkNotAvailable, // 10
-    MIOTYATCLIENT_RETURN_CODE_UplinkPackingErr,
-    MIOTYATCLIENT_RETURN_CODE_MacNoDownlinkReceived, // 12
-    MIOTYATCLIENT_RETURN_CODE_MacOptionNotAllowed,
-    MIOTYATCLIENT_RETURN_CODE_MacDownlinkErr, // 14
-    MIOTYATCLIENT_RETURN_CODE_MacDefaultsNotSet,
-    MIOTYATCLIENT_RETURN_CODE_ATErr, // 16 generic AT error not found
-    MIOTYATCLIENT_RETURN_CODE_ATgenericErr, // 17 generic AT error
-    MIOTYATCLIENT_RETURN_CODE_ATCommandNotKnown,
-    MIOTYATCLIENT_RETURN_CODE_ATParamOOB, //parameter out of bounds
-    MIOTYATCLIENT_RETURN_CODE_ATDataSizeMismatch, // 20
-    MIOTYATCLIENT_RETURN_CODE_ATUnexpectedChar,
-    MIOTYATCLIENT_RETURN_CODE_ATArgInvalid, // 22
-    MIOTYATCLIENT_RETURN_CODE_ATReadFailed,
+    MIOTYATCLIENT_RETURN_CODE_OK                         =   0, // ok
+    MIOTYATCLIENT_RETURN_CODE_MacError                   =   1, // generic mac error
+    MIOTYATCLIENT_RETURN_CODE_MacFramingError            =   2, // mac framing error
+    MIOTYATCLIENT_RETURN_CODE_ArgumentSizeMismatch       =   3, // argument size mismatch
+    MIOTYATCLIENT_RETURN_CODE_ArgumentOOR                =   4, // argument out of range
+    MIOTYATCLIENT_RETURN_CODE_BufferSizeInsufficient     =   5, // buffer size insufficient
+    MIOTYATCLIENT_RETURN_CODE_MacNodeNotAttached         =   6, // end-point not attached
+    MIOTYATCLIENT_RETURN_CODE_MacNetworkKeyNotSet        =   7, // network key not set
+    MIOTYATCLIENT_RETURN_CODE_MacAlreadyAttached         =   8, // already attached
+    MIOTYATCLIENT_RETURN_CODE_ERR                        =   9, // generic error, not in protocol
+    MIOTYATCLIENT_RETURN_CODE_MacDownlinkNotAvailable    =  10, // downlink not available
+    MIOTYATCLIENT_RETURN_CODE_UplinkPackingErr           =  11, // uplink packing error
+    MIOTYATCLIENT_RETURN_CODE_MacNoDownlinkReceived      =  12, // no downlink received of downlink acknowledge currupted
+    MIOTYATCLIENT_RETURN_CODE_MacOptionNotAllowed        =  13, // option not allowed
+    MIOTYATCLIENT_RETURN_CODE_MacDownlinkErr             =  14, // downlink crc error
+    MIOTYATCLIENT_RETURN_CODE_MacDefaultsNotSet          =  15, // defaults not set
+    MIOTYATCLIENT_RETURN_CODE_PreviousCommandNotFinished =  18, // previous command not finished
+    MIOTYATCLIENT_RETURN_CODE_DownlinkDataCorrupted      =  22, // downlink acknowledge ok, downlink data currupted
+    MIOTYATCLIENT_RETURN_CODE_FeatureNotSupported        = 100, // feature not supported
+    MIOTYATCLIENT_RETURN_CODE_ATErr                      = 200, // generic AT error not found
+    MIOTYATCLIENT_RETURN_CODE_ATgenericErr               = 201, // generic AT error
+    MIOTYATCLIENT_RETURN_CODE_ATCommandNotKnown          = 202, // command not known,
+    MIOTYATCLIENT_RETURN_CODE_ATParamOOB                 = 203, // parameter out of bounds
+    MIOTYATCLIENT_RETURN_CODE_ATDataSizeMismatch         = 204, // data size mismatch
+    MIOTYATCLIENT_RETURN_CODE_ATUnexpectedChar           = 206, // unexpected character
+    MIOTYATCLIENT_RETURN_CODE_ATArgInvalid               = 207, // invalid argument
+    MIOTYATCLIENT_RETURN_CODE_ATReadFailed               = 208, // reading data failed
 } miotyAtClient_returnCode;
 
 

@@ -1,4 +1,4 @@
-# MIOTY™ AT-Client
+# Swissphone m.YON AT-Client
 
 ## Release
 
@@ -6,7 +6,7 @@
 
 Client to communicate with the Swissphone m.YON mioty module.
 
-This library is forked from [https://github.com/mioty-iot/mioty_at_client_c].
+This library is forked from [https://github.com/mioty-iot/mioty_at_client_c](https://github.com/mioty-iot/mioty_at_client_c).
 
 ## Integration
 
