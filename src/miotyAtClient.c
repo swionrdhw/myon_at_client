@@ -23,12 +23,12 @@
  
 /**
  * \file
- * \version     0.0.2
+ * \version     0.2.0
  * \brief       Client side of communication with a MIOTY™ module via AT protocol v2.x.x
  */
 
 #include "miotyAtClient.h"
-#include "string_tools.h"
+#include "data_tools/string_tools.h"
 
 static miotyAtClient_returnCode get_info_bytes(char * AT_cmd, uint8_t sizeCmd, uint8_t * buffer, uint8_t * sizeBuf);
 static miotyAtClient_returnCode set_info_bytes(char * AT_cmd, uint8_t sizeCmd, uint8_t * data, uint8_t size_data);
