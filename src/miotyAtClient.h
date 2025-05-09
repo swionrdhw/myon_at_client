@@ -71,8 +71,8 @@ typedef enum miotyAtClient_returnCode {
 } miotyAtClient_returnCode;
 
 
-void miotyAtClientWrite(uint8_t *, uint16_t);
-bool miotyAtClientRead(uint8_t *, uint8_t *);
+void miotyAtClientWrite(const uint8_t *data, size_t len);
+bool miotyAtClientRead (uint8_t       *data, size_t *len_out);
 
 
 /**
@@ -111,7 +111,7 @@ miotyAtClient_returnCode miotyAtClient_shutdown(void);
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
 
  */
-miotyAtClient_returnCode miotyAtClient_setNetworkKey(uint8_t * nwKey);
+miotyAtClient_returnCode miotyAtClient_setNetworkKey(const uint8_t *nwKey);
 
 /**
  * @brief Get/Set IPv6 subnet mask (AT-IPV6)
@@ -122,7 +122,7 @@ miotyAtClient_returnCode miotyAtClient_setNetworkKey(uint8_t * nwKey);
  * @return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
 
  */
-miotyAtClient_returnCode miotyAtClient_getOrSetIPv6SubnetMask(uint8_t * ipv6, bool set);
+miotyAtClient_returnCode miotyAtClient_getOrSetIPv6SubnetMask(uint8_t *ipv6, bool set);
 
 /**
  * @brief Get/Set EUI mask (AT-MEUI)
@@ -133,17 +133,17 @@ miotyAtClient_returnCode miotyAtClient_getOrSetIPv6SubnetMask(uint8_t * ipv6, bo
  * @return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
 
  */
-miotyAtClient_returnCode miotyAtClient_getOrSetEui(uint8_t * eui64, bool set);
+miotyAtClient_returnCode miotyAtClient_getOrSetEui(uint8_t *eui64, bool set);
 
 /**
  * @brief Get/Set short Adress (AT-MSAD)
  *
- * @param[in,out]   shortAdress     Either a 2 byte array containing the new short Adress or a 2 byte buffer to store the current short Adress
- * @param[in]       set             If true short Adress will be set, otherwise it will be written to shortAdress
+ * @param[in,out]   shortAddress    Either a 2 byte array containing the new short Adress or a 2 byte buffer to store the current short Adress
+ * @param[in]       set             If true short Adress will be set, otherwise it will be written to shortAddress
  *
  * @return 
  */
-miotyAtClient_returnCode miotyAtClient_getOrSetShortAdress(uint8_t * shortAdress, bool set);
+miotyAtClient_returnCode miotyAtClient_getOrSetShortAddress(uint8_t *shortAddress, bool set);
 
 /**
  * @brief Send AT command to get the current packet counter (AT-MPCT)
@@ -153,7 +153,7 @@ miotyAtClient_returnCode miotyAtClient_getOrSetShortAdress(uint8_t * shortAdress
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
 
  */
-miotyAtClient_returnCode miotyAtClient_getPacketCounter(uint32_t * counter);
+miotyAtClient_returnCode miotyAtClient_getPacketCounter(uint32_t *counter);
 
 /**
  * @brief Get/Set Uplink transmit power (AT-UTPL)
@@ -163,7 +163,7 @@ miotyAtClient_returnCode miotyAtClient_getPacketCounter(uint32_t * counter);
  *
  * @return 
  */
-miotyAtClient_returnCode miotyAtClient_getOrSetTransmitPower(uint32_t * txPower, bool set);
+miotyAtClient_returnCode miotyAtClient_getOrSetTransmitPower(uint32_t *txPower, bool set);
 
 /**
  * @brief Get/Set uplink Mode (AT-UM)
@@ -173,7 +173,7 @@ miotyAtClient_returnCode miotyAtClient_getOrSetTransmitPower(uint32_t * txPower,
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_uplinkMode(uint32_t * ulMode, bool set);
+miotyAtClient_returnCode miotyAtClient_uplinkMode(uint32_t *ulMode, bool set);
 
 /**
  * @brief Get/Set uplink Profile (AT-UP)
@@ -183,7 +183,7 @@ miotyAtClient_returnCode miotyAtClient_uplinkMode(uint32_t * ulMode, bool set);
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_uplinkProfile(uint32_t * ulProfile, bool set);
+miotyAtClient_returnCode miotyAtClient_uplinkProfile(uint32_t *ulProfile, bool set);
 
 /*!
  * \brief Send uni-directional message (AT-U)
@@ -194,7 +194,7 @@ miotyAtClient_returnCode miotyAtClient_uplinkProfile(uint32_t * ulProfile, bool 
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageUni(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageUni(const uint8_t *msg, size_t sizeMsg, uint32_t *packetCounter);
 
 /*!
  * \brief Send uni-directional message (AT-UMPF)
@@ -205,7 +205,7 @@ miotyAtClient_returnCode miotyAtClient_sendMessageUni(uint8_t * msg, uint8_t siz
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(const uint8_t *msg, size_t sizeMsg, uint32_t *packetCounter);
 
 /*!
  * \brief Send bi-directional message (AT-B)
@@ -219,7 +219,9 @@ miotyAtClient_returnCode miotyAtClient_sendMessageUniMPF(uint8_t * msg, uint8_t 
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageBidi(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint8_t * dl_mpf, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageBidi(const uint8_t *msg, size_t sizeMsg,
+                                                       uint8_t *data, size_t *size_data,
+                                                       uint8_t *dl_mpf, uint32_t *packetCounter);
 
 /*!
  * \brief Send bi-directional message (AT-BMPF)
@@ -233,7 +235,9 @@ miotyAtClient_returnCode miotyAtClient_sendMessageBidi(uint8_t * msg, uint8_t si
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint8_t * dl_mpf, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(const uint8_t *msg, size_t sizeMsg,
+                                                          uint8_t *data, size_t *size_data,
+                                                          uint8_t *dl_mpf, uint32_t *packetCounter);
 
 /*!
  * \brief Send uni-directional message without MAC (AT-TU)
@@ -244,7 +248,7 @@ miotyAtClient_returnCode miotyAtClient_sendMessageBidiMPF(uint8_t * msg, uint8_t
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageUniTransparent(uint8_t * msg, uint8_t sizeMsg, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageUniTransparent(const uint8_t *msg, size_t sizeMsg, uint32_t *packetCounter);
 
 /*!
  * \brief Send bi-directional message without MAC (AT-TB)
@@ -257,7 +261,9 @@ miotyAtClient_returnCode miotyAtClient_sendMessageUniTransparent(uint8_t * msg, 
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_sendMessageBidiTransparent(uint8_t * msg, uint8_t sizeMsg, uint8_t * data, uint8_t * size_data, uint32_t * packetCounter);
+miotyAtClient_returnCode miotyAtClient_sendMessageBidiTransparent(const uint8_t *msg, size_t sizeMsg,
+                                                                  uint8_t *data, size_t *size_data,
+                                                                  uint32_t *packetCounter);
 
 /*!
  * \brief Mac attach (AT-MAOA)
@@ -267,7 +273,7 @@ miotyAtClient_returnCode miotyAtClient_sendMessageBidiTransparent(uint8_t * msg,
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_macAttach(uint8_t * data, uint8_t * MSTA);
+miotyAtClient_returnCode miotyAtClient_macAttach(const uint8_t *nonce4B, uint8_t *msta);
 
 /*!
  * \brief Mac dettach (AT-MDOA)
@@ -278,7 +284,7 @@ miotyAtClient_returnCode miotyAtClient_macAttach(uint8_t * data, uint8_t * MSTA)
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_macDetach(uint8_t * data, uint8_t sizeData, uint8_t * MSTA);
+miotyAtClient_returnCode miotyAtClient_macDetach(const uint8_t *data, size_t sizeData, uint8_t *msta);
 
 /**
  * @brief Local Mac Attach (AT-MALO)
@@ -287,7 +293,7 @@ miotyAtClient_returnCode miotyAtClient_macDetach(uint8_t * data, uint8_t sizeDat
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_macAttachLocal(uint8_t * MSTA);
+miotyAtClient_returnCode miotyAtClient_macAttachLocal(uint8_t *msta);
 
 /**
  * @brief Local Mac Detach (AT-MDLO)
@@ -296,7 +302,7 @@ miotyAtClient_returnCode miotyAtClient_macAttachLocal(uint8_t * MSTA);
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_macDetachLocal(uint8_t * MSTA);
+miotyAtClient_returnCode miotyAtClient_macDetachLocal(uint8_t *msta);
 
 /**
  * @brief Get the attachment state
@@ -305,7 +311,7 @@ miotyAtClient_returnCode miotyAtClient_macDetachLocal(uint8_t * MSTA);
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_getAttachment(bool * attached_p);
+miotyAtClient_returnCode miotyAtClient_getAttachment(bool *attached);
 
 /**
  * @brief Get/Set downling request response flag for next uplink (AT-MRDR)
@@ -315,7 +321,7 @@ miotyAtClient_returnCode miotyAtClient_getAttachment(bool * attached_p);
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool * dl_flag, bool set);
+miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool *flag, bool set);
 
 /*!
  * \brief Get end-point information (ATI)
@@ -325,7 +331,7 @@ miotyAtClient_returnCode miotyAtClient_downlinkRequestResponseFlag(bool * dl_fla
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t * buffer, uint8_t * sizeBuf);
+miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t *buffer, size_t *sizeBuf);
 
 /*!
  * \brief Get end-point core lib information (AT-LIBV)
@@ -335,7 +341,7 @@ miotyAtClient_returnCode miotyAtClient_getEpInfo(uint8_t * buffer, uint8_t * siz
  *
  * \return          miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyAtClient_getCoreLibInfo(uint8_t * buffer, uint8_t * sizeBuf);
+miotyAtClient_returnCode miotyAtClient_getCoreLibInfo(uint8_t *buffer, size_t *sizeBuf);
 
 /**
  * @brief Get/Set TX inhibit function state (AT-TXINH)
@@ -345,7 +351,7 @@ miotyAtClient_returnCode miotyAtClient_getCoreLibInfo(uint8_t * buffer, uint8_t 
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyArClient_txInhibit(bool * enable, bool set);
+miotyAtClient_returnCode miotyAtClient_txInhibit(bool *enable, bool set);
 
 /**
  * @brief Get/Set TX active function state (AT-TXACT)
@@ -355,7 +361,7 @@ miotyAtClient_returnCode miotyArClient_txInhibit(bool * enable, bool set);
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyArClient_txActive(bool * enable, bool set);
+miotyAtClient_returnCode miotyAtClient_txActive(bool *enable, bool set);
 
 /**
  * @brief Get/Set RX active function state (AT-RXACT)
@@ -365,7 +371,7 @@ miotyAtClient_returnCode miotyArClient_txActive(bool * enable, bool set);
  *
  * @return      miotyAtClient_returnCode    indicating success/error of AT_cmd execution
  */
-miotyAtClient_returnCode miotyArClient_rxActive(bool * enable, bool set);
+miotyAtClient_returnCode miotyAtClient_rxActive(bool *enable, bool set);
 
 /**
  * @brief Start sending an unmodulated carrier at the given frequency (AT$TXCU)

@@ -41,7 +41,7 @@ void setup() {
 
   // read info
   uint8_t info_buffer[100] = {0};
-  uint8_t info_len = sizeof(info_buffer);
+  size_t info_len = sizeof(info_buffer);
   if (miotyAtClient_getEpInfo(info_buffer, &info_len) == MIOTYATCLIENT_RETURN_CODE_OK) {
     SerialPC.write(info_buffer, info_len);
     SerialPC.println("");
@@ -68,7 +68,7 @@ void setup() {
   }
 
   uint8_t short_addr[2];
-  if (miotyAtClient_getOrSetShortAdress(short_addr, false) == MIOTYATCLIENT_RETURN_CODE_OK) {
+  if (miotyAtClient_getOrSetShortAddress(short_addr, false) == MIOTYATCLIENT_RETURN_CODE_OK) {
     SerialPC.printf("Short address: %02X%02X\n", short_addr[0], short_addr[1]);
   }
   else {
@@ -105,15 +105,15 @@ void loop() {
 }
 
 // needed UART implementations for miotyAtClient
-void miotyAtClientWrite(uint8_t* msg, uint16_t len) {
-  SerialMyon.write(msg, len);
+void miotyAtClientWrite(const uint8_t *data, size_t len) {
+  SerialMyon.write(data, len);
 }
 
-bool miotyAtClientRead(uint8_t* buf, uint8_t* p_len) {
+bool miotyAtClientRead (uint8_t *data, size_t *len_out) {
   int i = 0;
   while (SerialMyon.available() > 0) {
-    buf[i++] = SerialMyon.read();
+    data[i++] = SerialMyon.read();
   }
-  *p_len = i;
+  *len_out = i;
   return true;
 }

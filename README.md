@@ -12,7 +12,7 @@ This library is forked from [https://github.com/mioty-iot/mioty_at_client_c](htt
 
 The user needs to implement the functions:  
 
-- atClientWrite
-- atClientRead
+- miotyAtClientWrite
+- miotyAtClientRead
 
 Arduino libraries can be installed manually as described in [https://www.arduino.cc/en/Guide/Libraries#toc5](https://www.arduino.cc/en/Guide/Libraries#toc5)
